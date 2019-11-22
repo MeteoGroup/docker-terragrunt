@@ -65,7 +65,7 @@ RUN set -eux \
 FROM alpine:3.9
 # This part was eddited
 LABEL \
-	maintainer="Ole Göbbels <Ole.Goebbels@meteogroup.com>" \
+	maintainer="MeteoGroup <MG-TECH-DP-Modelteam@meteogroup.com>" \
 	repo="https://github.com/MeteoGroup/docker-terragrunt" \
 	original_maintainer="cytopia <cytopia@everythingcli.org>" \
 	original_repo="https://github.com/cytopia/docker-terragrunt"
