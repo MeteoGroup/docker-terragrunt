@@ -22,6 +22,9 @@ $(shell echo "version=$(VERSION)" > $(VERSION_FILE))
 $(info using version $(VERSION) which is self-calculated)
 endif
 
+clean:
+	@rm -f $(VERSION_FILE)
+
 docker-create:
 	docker build \
 	  --build-arg TF_VERSION=$(TF_VERSION) \
@@ -39,4 +42,4 @@ else
 	docker push $(DOCKER_NAME):$(CURRENT_BRANCH)-$(VERSION)
 endif
 
-build-deploy: docker-create docker-push
+build-deploy: clean docker-create docker-push
