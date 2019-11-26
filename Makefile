@@ -23,7 +23,6 @@ else
 endif
 
 clean:
-	@rm -f $(VERSION_FILE)
 	@docker rmi $(DOCKER_NAME):latest || true
 	@docker rmi $(DOCKER_NAME):$(VERSION) || true
 
