@@ -2,7 +2,6 @@
 Dockerfile is based on two images made by [cytopia](https://github.com/cytopia).
 
 Those two images are [docker-terragrunt](https://github.com/cytopia/docker-terragrunt/tree/1bc1a2c6de42c6d19f7e91f64f30256c24fd386f) and [docker-terragrunt-fmt](https://github.com/cytopia/docker-terragrunt-fmt/tree/3f8964bea0db043a05d4a8d622f94a07f109b5a7).
-Their content can be found in `originals` folder.
 
 Some changes have been applied to add more software to the image - list below.
 
