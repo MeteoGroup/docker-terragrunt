@@ -11,20 +11,16 @@ DOCKER_NAME := meteogroup/docker-terragrunt
 # Version tag taken from environment, file, or calculated date
 VERSION_FILE := version.txt
 ifdef VERSION
-  $(shell echo "version=$(VERSION)" > $(VERSION_FILE))
-  $(info using version $(VERSION) from parameter input or environment)
+$(shell echo "version=$(VERSION)" > $(VERSION_FILE))
+$(info using version $(VERSION) from parameter input or environment)
 else ifneq ("$(wildcard $(VERSION_FILE))","")
-  VERSION=$(shell awk -F'=' '/version/{print $$2}' $(VERSION_FILE))
-  $(info using version $(VERSION) from file $(VERSION_FILE))
+VERSION := $(shell awk -F'=' '/version/{print $$2}' $(VERSION_FILE))
+$(info using version $(VERSION) from file $(VERSION_FILE))
 else
-  VERSION=$(shell date -u +"%Y-%m-%dT%H-%M-%SZ")
-  $(shell echo "version=$(VERSION)" > $(VERSION_FILE))
-  $(info using version $(VERSION) which is self-calculated)
+VERSION := $(shell date -u +"%Y-%m-%dT%H-%M-%SZ")
+$(shell echo "version=$(VERSION)" > $(VERSION_FILE))
+$(info using version $(VERSION) which is self-calculated)
 endif
-
-clean:
-	@docker rmi $(DOCKER_NAME):latest || true
-	@docker rmi $(DOCKER_NAME):$(VERSION) || true
 
 docker-create:
 	docker build \
@@ -43,4 +39,4 @@ else
 	docker push $(DOCKER_NAME):$(CURRENT_BRANCH)-$(VERSION)
 endif
 
-build-deploy: clean docker-create docker-push
+build-deploy: docker-create docker-push
