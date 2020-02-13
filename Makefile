@@ -1,7 +1,7 @@
 
 # Provide versions of Terraform and Terragrunt to use with this Docker image
-TF_VERSION ?= 0.12.16
-TG_VERSION ?= 0.21.6
+TF_VERSION ?= 0.12.20
+TG_VERSION ?= 0.21.13
 
 # Constants
 CURRENT_BRANCH := ${bamboo_planRepository_branchName}
