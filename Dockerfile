@@ -97,7 +97,9 @@ RUN set -eux \
 	&& python -m pip install ply \
 	&& python -m pip install pyhcl \
 	&& python -m pip install awscli \
-	&& python -m pip install boto3
+	&& python -m pip install boto3 \
+	&& touch /root/.ssh/known_hosts \
+	&& ssh-keyscan github.com >> /root/.ssh/known
 
 WORKDIR /data
 CMD terraform --version && terragrunt --version
