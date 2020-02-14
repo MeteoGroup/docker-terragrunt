@@ -27,6 +27,8 @@ Some changes have been applied to add more software to the image - list below.
     * For using `Makefile` instead of scripts in deployment process.
 * openssl
     * For calculating BASE64SHA256 hash of Lambda packages. Assures updating Lambdas only when package hash changed.
+* openssh-client
+    * For access private Git repository from Docker container for terraform modules.
 * python3
     * For running more complex scripts during deployment process.
 * zip
