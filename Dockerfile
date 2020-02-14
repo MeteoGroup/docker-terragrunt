@@ -15,18 +15,18 @@ ARG TF_VERSION=latest
 RUN set -eux \
 	&& if [ "${TF_VERSION}" = "latest" ]; then \
 		VERSION="$( curl -sS https://releases.hashicorp.com/terraform/ \
-				| tac | tac \
-				| grep -Eo '/[.0-9]+/' \
-				| grep -Eo '[.0-9]+' \
-				| sort -V \
-				| tail -1 )"; \
+			| tac | tac \
+			| grep -Eo '/[.0-9]+/' \
+			| grep -Eo '[.0-9]+' \
+			| sort -V \
+			| tail -1 )"; \
 	else \
 		VERSION="$( curl -sS https://releases.hashicorp.com/terraform/ \
-				| tac | tac \
-				| grep -Eo "/${TF_VERSION}/" \
-				| grep -Eo '[.0-9]+' \
-				| sort -V \
-				| tail -1 )"; \
+			| tac | tac \
+			| grep -Eo "/${TF_VERSION}/" \
+			| grep -Eo '[.0-9]+' \
+			| sort -V \
+			| tail -1 )"; \
 	fi \
 	&& curl -sS -L -O \
 		https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_amd64.zip \
@@ -63,7 +63,6 @@ RUN set -eux \
 
 # Use a clean tiny image to store artifacts in
 FROM alpine:3.9
-
 # This part was eddited
 LABEL \
 	maintainer="MeteoGroup <MG-TECH-DP-Modelteam@meteogroup.com>" \
