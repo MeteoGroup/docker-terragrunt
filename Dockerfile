@@ -63,6 +63,7 @@ RUN set -eux \
 
 # Use a clean tiny image to store artifacts in
 FROM alpine:3.9
+
 # This part was eddited
 LABEL \
 	maintainer="MeteoGroup <MG-TECH-DP-Modelteam@meteogroup.com>" \
