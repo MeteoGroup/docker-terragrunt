@@ -78,7 +78,7 @@ COPY --from=builder /usr/bin/terragrunt /usr/bin/terragrunt
 COPY --from=builder /usr/bin/scenery /usr/bin/scenery
 # This part has some additions
 RUN set -eux \
-    && chmod +x /usr/bin/format-hcl.sh /fmt.sh /terragrunt-fmt.sh \
+	&& chmod +x /usr/bin/format-hcl.sh /fmt.sh /terragrunt-fmt.sh \
 	&& apk add --no-cache git \
 	&& apk add --no-cache make \
 	&& apk add --no-cache python3 \
@@ -87,16 +87,19 @@ RUN set -eux \
 	&& apk add --no-cache docker \
 	&& apk add --no-cache zip \
 	&& apk add --no-cache openssl \
+	&& apk add --no-cache openssh-client \
 	&& apk add --no-cache jq \
-    && if [ ! -e /usr/bin/python ]; then ln -sf python3 /usr/bin/python ; fi \
-    && python3 -m ensurepip \
-    && rm -r /usr/lib/python*/ensurepip \
-    && pip3 install --no-cache --upgrade pip setuptools wheel \
-    && if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi \
-    && python -m pip install ply \
+	&& if [ ! -e /usr/bin/python ]; then ln -sf python3 /usr/bin/python ; fi \
+	&& python3 -m ensurepip \
+	&& rm -r /usr/lib/python*/ensurepip \
+	&& pip3 install --no-cache --upgrade pip setuptools wheel \
+	&& if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi \
+	&& python -m pip install ply \
 	&& python -m pip install pyhcl \
 	&& python -m pip install awscli \
-	&& python -m pip install boto3
+	&& python -m pip install boto3 \
+	&& mkdir -p -m 0600 ~/.ssh \
+	&& ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 WORKDIR /data
 CMD terraform --version && terragrunt --version
