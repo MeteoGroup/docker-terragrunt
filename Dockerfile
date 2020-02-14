@@ -4,32 +4,32 @@ FROM debian:stable-slim as builder
 RUN set -eux \
 	&& DEBIAN_FRONTEND=noninteractive apt-get update -qq \
 	&& DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends --no-install-suggests \
-			ca-certificates \
-			curl \
-			git \
-			unzip
+		ca-certificates \
+		curl \
+		git \
+		unzip
 
 # Get Terraform
 # Contrary to orignal by cytopia (https://github.com/cytopia) TF_VERSION needs to point to explicit version, e.g. 0.12.16
 ARG TF_VERSION=latest
 RUN set -eux \
 	&& if [ "${TF_VERSION}" = "latest" ]; then \
-			VERSION="$( curl -sS https://releases.hashicorp.com/terraform/ \
-					| tac | tac \
-					| grep -Eo '/[.0-9]+/' \
-					| grep -Eo '[.0-9]+' \
-					| sort -V \
-					| tail -1 )"; \
+		VERSION="$( curl -sS https://releases.hashicorp.com/terraform/ \
+				| tac | tac \
+				| grep -Eo '/[.0-9]+/' \
+				| grep -Eo '[.0-9]+' \
+				| sort -V \
+				| tail -1 )"; \
 	else \
-			VERSION="$( curl -sS https://releases.hashicorp.com/terraform/ \
-					| tac | tac \
-					| grep -Eo "/${TF_VERSION}/" \
-					| grep -Eo '[.0-9]+' \
-					| sort -V \
-					| tail -1 )"; \
+		VERSION="$( curl -sS https://releases.hashicorp.com/terraform/ \
+				| tac | tac \
+				| grep -Eo "/${TF_VERSION}/" \
+				| grep -Eo '[.0-9]+' \
+				| sort -V \
+				| tail -1 )"; \
 	fi \
 	&& curl -sS -L -O \
-			https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_amd64.zip \
+		https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_amd64.zip \
 	&& unzip terraform_${VERSION}_linux_amd64.zip \
 	&& mv terraform /usr/bin/terraform \
 	&& chmod +x /usr/bin/terraform
@@ -41,13 +41,13 @@ RUN set -eux \
 	&& git clone https://github.com/gruntwork-io/terragrunt /terragrunt \
 	&& cd /terragrunt \
 	&& if [ "${TG_VERSION}" = "latest" ]; then \
-			VERSION="$( git describe --abbrev=0 --tags )"; \
+		VERSION="$( git describe --abbrev=0 --tags )"; \
 	else \
-			VERSION="$( git tag | grep -E "v${TG_VERSION}" | sort -u | tail -1 )" ;\
+		VERSION="$( git tag | grep -E "v${TG_VERSION}" | sort -u | tail -1 )" ;\
 	fi \
 	&& curl -sS -L \
-			https://github.com/gruntwork-io/terragrunt/releases/download/${VERSION}/terragrunt_linux_amd64 \
-			-o /usr/bin/terragrunt \
+		https://github.com/gruntwork-io/terragrunt/releases/download/${VERSION}/terragrunt_linux_amd64 \
+		-o /usr/bin/terragrunt \
 	&& chmod +x /usr/bin/terragrunt
 
 # Get latest Scenery
@@ -57,12 +57,13 @@ RUN set -eux \
 	&& cd /scenery \
 	&& VERSION="$( git describe --abbrev=0 --tags )" \
 	&& curl -sS -L \
-			https://github.com/dmlittle/scenery/releases/download/${VERSION}/scenery-${VERSION}-linux-amd64 \
-			-o /usr/bin/scenery \
+		https://github.com/dmlittle/scenery/releases/download/${VERSION}/scenery-${VERSION}-linux-amd64 \
+		-o /usr/bin/scenery \
 	&& chmod +x /usr/bin/scenery
 
 # Use a clean tiny image to store artifacts in
 FROM alpine:3.9
+
 # This part was eddited
 LABEL \
 	maintainer="MeteoGroup <MG-TECH-DP-Modelteam@meteogroup.com>" \
